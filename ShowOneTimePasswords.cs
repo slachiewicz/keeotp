@@ -79,6 +79,9 @@ namespace KeeOtp
 
         private void ShowCode()
         {
+            this.lastCode = 0;
+            this.lastRemainingTime = 0;
+
             this.totp = new Totp(this.data.Key, step: this.data.Step, totpSize: this.data.Size);
             this.timerUpdateTotp.Enabled = true;
         }
@@ -103,10 +106,12 @@ namespace KeeOtp
                 // indicate that a change was made, must save
                 host.MainWindow.UpdateUI(false, null, true, host.Database.RootGroup, true, null, true);
 
-                this.Show();
+                this.ShowCode();
             }
-            else
+            else if (this.data == null)
                 this.Close();
+            else
+                this.ShowCode();
         }
     }
 }
