@@ -40,7 +40,7 @@
             // 
             this.labelOtp.AutoSize = true;
             this.labelOtp.Font = new System.Drawing.Font("Microsoft Sans Serif", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelOtp.Location = new System.Drawing.Point(24, 51);
+            this.labelOtp.Location = new System.Drawing.Point(24, 93);
             this.labelOtp.Name = "labelOtp";
             this.labelOtp.Size = new System.Drawing.Size(248, 73);
             this.labelOtp.TabIndex = 0;
@@ -49,7 +49,7 @@
             // labelRemaining
             // 
             this.labelRemaining.AutoSize = true;
-            this.labelRemaining.Location = new System.Drawing.Point(145, 124);
+            this.labelRemaining.Location = new System.Drawing.Point(145, 166);
             this.labelRemaining.Name = "labelRemaining";
             this.labelRemaining.Size = new System.Drawing.Size(35, 13);
             this.labelRemaining.TabIndex = 1;
@@ -58,7 +58,7 @@
             // labelRemainingLabel
             // 
             this.labelRemainingLabel.AutoSize = true;
-            this.labelRemainingLabel.Location = new System.Drawing.Point(53, 124);
+            this.labelRemainingLabel.Location = new System.Drawing.Point(53, 166);
             this.labelRemainingLabel.Name = "labelRemainingLabel";
             this.labelRemainingLabel.Size = new System.Drawing.Size(86, 13);
             this.labelRemainingLabel.TabIndex = 2;
@@ -68,7 +68,7 @@
             // 
             this.labelInstructions.Location = new System.Drawing.Point(31, 9);
             this.labelInstructions.Name = "labelInstructions";
-            this.labelInstructions.Size = new System.Drawing.Size(226, 42);
+            this.labelInstructions.Size = new System.Drawing.Size(226, 69);
             this.labelInstructions.TabIndex = 3;
             this.labelInstructions.Text = "Enter this code in the verification system.  If problems occur contunually double" +
     " check that the clock on your computer is set precisely.  Be sure to double chec" +
@@ -78,7 +78,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 161);
+            this.ClientSize = new System.Drawing.Size(284, 192);
             this.Controls.Add(this.labelInstructions);
             this.Controls.Add(this.labelRemainingLabel);
             this.Controls.Add(this.labelRemaining);
