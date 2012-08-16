@@ -4,7 +4,7 @@ using System.Text;
 
 namespace KeeOtp
 {
-    enum OtpType
+    public enum OtpType
     {
         Totp,
         Hotp

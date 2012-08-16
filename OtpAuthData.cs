@@ -10,7 +10,7 @@ namespace KeeOtp
     /// <summary>
     /// Class that serializes and deserializes data into the Strings for the entry
     /// </summary>
-    class OtpAuthData
+    public class OtpAuthData
     {
         public const string StringDictionaryKey = "otp";
 

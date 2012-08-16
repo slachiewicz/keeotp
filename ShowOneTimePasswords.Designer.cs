@@ -34,6 +34,8 @@
             this.labelRemaining = new System.Windows.Forms.Label();
             this.labelRemainingLabel = new System.Windows.Forms.Label();
             this.labelInstructions = new System.Windows.Forms.Label();
+            this.buttonClose = new System.Windows.Forms.Button();
+            this.buttonEdit = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // labelOtp
@@ -74,11 +76,35 @@
     " check that the clock on your computer is set precisely.  Be sure to double chec" +
     "k the time zone as well.";
             // 
+            // buttonClose
+            // 
+            this.buttonClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonClose.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.buttonClose.Location = new System.Drawing.Point(197, 231);
+            this.buttonClose.Name = "buttonClose";
+            this.buttonClose.Size = new System.Drawing.Size(75, 23);
+            this.buttonClose.TabIndex = 4;
+            this.buttonClose.Text = "Close";
+            this.buttonClose.UseVisualStyleBackColor = true;
+            // 
+            // buttonEdit
+            // 
+            this.buttonEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonEdit.Location = new System.Drawing.Point(116, 231);
+            this.buttonEdit.Name = "buttonEdit";
+            this.buttonEdit.Size = new System.Drawing.Size(75, 23);
+            this.buttonEdit.TabIndex = 5;
+            this.buttonEdit.Text = "Edit";
+            this.buttonEdit.UseVisualStyleBackColor = true;
+            this.buttonEdit.Click += new System.EventHandler(this.buttonEdit_Click);
+            // 
             // ShowOneTimePasswords
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 192);
+            this.ClientSize = new System.Drawing.Size(284, 266);
+            this.Controls.Add(this.buttonEdit);
+            this.Controls.Add(this.buttonClose);
             this.Controls.Add(this.labelInstructions);
             this.Controls.Add(this.labelRemainingLabel);
             this.Controls.Add(this.labelRemaining);
@@ -97,5 +123,7 @@
         private System.Windows.Forms.Label labelRemaining;
         private System.Windows.Forms.Label labelRemainingLabel;
         private System.Windows.Forms.Label labelInstructions;
+        private System.Windows.Forms.Button buttonClose;
+        private System.Windows.Forms.Button buttonEdit;
     }
 }

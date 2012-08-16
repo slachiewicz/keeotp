@@ -44,7 +44,7 @@ namespace KeeOtp
             // grab the entry that we care about
             var entry = entries[0];
 
-            ShowOneTimePasswords form = new ShowOneTimePasswords(entry);
+            ShowOneTimePasswords form = new ShowOneTimePasswords(entry, host);
             form.ShowDialog();
         }
     }

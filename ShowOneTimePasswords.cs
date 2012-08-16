@@ -1,18 +1,24 @@
 ﻿using System;
 using System.Windows.Forms;
+using KeePass.Plugins;
+using KeePassLib.Security;
 using OtpSharp;
 
 namespace KeeOtp
 {
     public partial class ShowOneTimePasswords : Form
     {
-        private KeePassLib.PwEntry entry;
+        private readonly KeePassLib.PwEntry entry;
+        private readonly IPluginHost host ;
         private Totp totp;
         private int lastCode;
         private int lastRemainingTime;
 
-        public ShowOneTimePasswords(KeePassLib.PwEntry entry)
+        OtpAuthData data;
+
+        public ShowOneTimePasswords(KeePassLib.PwEntry entry, IPluginHost host)
         {
+            this.host = host;
             this.entry = entry;
             InitializeComponent();
             this.Shown += (sender, e) => FormWasShown();
@@ -30,7 +36,7 @@ namespace KeeOtp
                 if (code != lastCode)
                 {
                     lastCode = code;
-                    this.labelOtp.Text = code.ToString().PadLeft(6, '0');
+                    this.labelOtp.Text = code.ToString().PadLeft(this.data.Size, '0');
                 }
                 if (remaining != lastRemainingTime)
                 {
@@ -49,29 +55,58 @@ namespace KeeOtp
         {
             if (!entry.Strings.Exists(OtpAuthData.StringDictionaryKey))
             {
-                this.Close();
-                MessageBox.Show("Please add a one time password field");
+                this.AddEdit();
             }
             else
             {
                 try
                 {
-                    var otpAuthData = OtpAuthData.FromString(entry.Strings.Get(OtpAuthData.StringDictionaryKey).ReadString());
+                    this.data = OtpAuthData.FromString(entry.Strings.Get(OtpAuthData.StringDictionaryKey).ReadString());
 
-                    this.totp = new Totp(otpAuthData.Key, step:otpAuthData.Step);
-                    this.timerUpdateTotp.Enabled = true;
+                    ShowCode();
                 }
-                catch (Exception e)
+                catch
                 {
-                    MessageBox.Show(e.Message);
-                    this.Close();
+                    this.AddEdit();
                 }
             }
+        }
 
-            //entry.Strings.Set("TOTP", new ProtectedString(true, "test"));
+        private void buttonEdit_Click(object sender, EventArgs e)
+        {
+            this.AddEdit();
+        }
 
-            //host.MainWindow.UpdateUI(false, null, true, host.Database.RootGroup,
-            //true, null, true);
+        private void ShowCode()
+        {
+            this.totp = new Totp(this.data.Key, step: this.data.Step, totpSize: this.data.Size);
+            this.timerUpdateTotp.Enabled = true;
+        }
+
+        private void AddEdit()
+        {
+            this.timerUpdateTotp.Enabled = false;
+            this.labelRemaining.Text = "x";
+            this.labelOtp.Text = "xxxxxx";
+            this.totp = null;
+
+            var addEditForm = new OtpInformation();
+            addEditForm.Data = this.data;
+
+            var result = addEditForm.ShowDialog();
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                this.data = addEditForm.Data;
+                // set the data
+                entry.Strings.Set(OtpAuthData.StringDictionaryKey, new ProtectedString(true, this.data.EncodedString));
+
+                // indicate that a change was made, must save
+                host.MainWindow.UpdateUI(false, null, true, host.Database.RootGroup, true, null, true);
+
+                this.Show();
+            }
+            else
+                this.Close();
         }
     }
 }

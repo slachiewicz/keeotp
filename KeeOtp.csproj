@@ -69,6 +69,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="OtpInformation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OtpInformation.Designer.cs">
+      <DependentUpon>OtpInformation.cs</DependentUpon>
+    </Compile>
     <Compile Include="OtpType.cs" />
     <Compile Include="KeeOtpExt.cs" />
     <Compile Include="OtpAuthData.cs" />
@@ -98,6 +104,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="OtpInformation.resx">
+      <DependentUpon>OtpInformation.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ShowOneTimePasswords.resx">
       <DependentUpon>ShowOneTimePasswords.cs</DependentUpon>
     </EmbeddedResource>
