@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
-using KeePassLib.Security;
 using OtpSharp;
 
 namespace KeeOtp
@@ -53,7 +47,7 @@ namespace KeeOtp
 
         private void FormWasShown()
         {
-            if (!entry.Strings.Exists(Constants.OtpDictionaryKey))
+            if (!entry.Strings.Exists(OtpAuthData.StringDictionaryKey))
             {
                 this.Close();
                 MessageBox.Show("Please add a one time password field");
@@ -62,9 +56,9 @@ namespace KeeOtp
             {
                 try
                 {
-                    var otpEncodedKey = entry.Strings.Get(Constants.OtpDictionaryKey);
-                    var key = Base32.Decode(otpEncodedKey.ReadString());
-                    this.totp = new Totp(key);
+                    var otpAuthData = OtpAuthData.FromString(entry.Strings.Get(OtpAuthData.StringDictionaryKey).ReadString());
+
+                    this.totp = new Totp(otpAuthData.Key, step:otpAuthData.Step);
                     this.timerUpdateTotp.Enabled = true;
                 }
                 catch (Exception e)

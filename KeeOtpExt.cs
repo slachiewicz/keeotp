@@ -20,7 +20,7 @@ namespace KeeOtp
             this.otpSeperatorToolStripItem = new ToolStripSeparator();
             host.MainWindow.EntryContextMenu.Items.Add(this.otpSeperatorToolStripItem);
 
-            this.otpDialogToolStripItem = host.MainWindow.EntryContextMenu.Items.Add("One Time Passwords");
+            this.otpDialogToolStripItem = host.MainWindow.EntryContextMenu.Items.Add("One Time Password");
             this.otpDialogToolStripItem.Click += new EventHandler(otpDialogToolStripItem_Click);
             return true; // Initialization successful
         }

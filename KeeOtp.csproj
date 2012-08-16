@@ -64,12 +64,14 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constants.cs" />
+    <Compile Include="OtpType.cs" />
     <Compile Include="KeeOtpExt.cs" />
+    <Compile Include="OtpAuthData.cs" />
     <Compile Include="ShowOneTimePasswords.cs">
       <SubType>Form</SubType>
     </Compile>

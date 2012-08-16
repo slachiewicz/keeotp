@@ -4,8 +4,9 @@ using System.Text;
 
 namespace KeeOtp
 {
-    internal class Constants
+    enum OtpType
     {
-        public const string OtpDictionaryKey = "OTPAUTH";
+        Totp,
+        Hotp
     }
 }

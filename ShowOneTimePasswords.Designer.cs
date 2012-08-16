@@ -42,18 +42,18 @@
             this.labelOtp.Font = new System.Drawing.Font("Microsoft Sans Serif", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelOtp.Location = new System.Drawing.Point(24, 93);
             this.labelOtp.Name = "labelOtp";
-            this.labelOtp.Size = new System.Drawing.Size(248, 73);
+            this.labelOtp.Size = new System.Drawing.Size(224, 73);
             this.labelOtp.TabIndex = 0;
-            this.labelOtp.Text = "012345";
+            this.labelOtp.Text = "xxxxxx";
             // 
             // labelRemaining
             // 
             this.labelRemaining.AutoSize = true;
             this.labelRemaining.Location = new System.Drawing.Point(145, 166);
             this.labelRemaining.Name = "labelRemaining";
-            this.labelRemaining.Size = new System.Drawing.Size(35, 13);
+            this.labelRemaining.Size = new System.Drawing.Size(12, 13);
             this.labelRemaining.TabIndex = 1;
-            this.labelRemaining.Text = "label2";
+            this.labelRemaining.Text = "x";
             // 
             // labelRemainingLabel
             // 
