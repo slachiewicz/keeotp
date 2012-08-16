@@ -55,8 +55,8 @@ namespace KeeOtp
         {
             if (!entry.Strings.Exists("OTP"))
             {
-                MessageBox.Show("Please add a one time password field");
                 this.Close();
+                MessageBox.Show("Please add a one time password field");
             }
             else
             {
