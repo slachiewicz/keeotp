@@ -33,6 +33,7 @@
             this.labelOtp = new System.Windows.Forms.Label();
             this.labelRemaining = new System.Windows.Forms.Label();
             this.labelRemainingLabel = new System.Windows.Forms.Label();
+            this.labelInstructions = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // labelOtp
@@ -63,11 +64,22 @@
             this.labelRemainingLabel.TabIndex = 2;
             this.labelRemainingLabel.Text = "Time Remaining:";
             // 
+            // labelInstructions
+            // 
+            this.labelInstructions.Location = new System.Drawing.Point(31, 9);
+            this.labelInstructions.Name = "labelInstructions";
+            this.labelInstructions.Size = new System.Drawing.Size(226, 42);
+            this.labelInstructions.TabIndex = 3;
+            this.labelInstructions.Text = "Enter this code in the verification system.  If problems occur contunually double" +
+    " check that the clock on your computer is set precisely.  Be sure to double chec" +
+    "k the time zone as well.";
+            // 
             // ShowOneTimePasswords
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 262);
+            this.ClientSize = new System.Drawing.Size(284, 161);
+            this.Controls.Add(this.labelInstructions);
             this.Controls.Add(this.labelRemainingLabel);
             this.Controls.Add(this.labelRemaining);
             this.Controls.Add(this.labelOtp);
@@ -84,5 +96,6 @@
         private System.Windows.Forms.Label labelOtp;
         private System.Windows.Forms.Label labelRemaining;
         private System.Windows.Forms.Label labelRemainingLabel;
+        private System.Windows.Forms.Label labelInstructions;
     }
 }
