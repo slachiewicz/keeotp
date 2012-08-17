@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.Windows.Forms;
 using KeePass.Plugins;
 using KeePass.Util;
@@ -17,8 +16,8 @@ namespace KeeOtp
 
         public override bool Initialize(IPluginHost host)
         {
-            Debug.Assert(host != null);
-            if (host == null) return false;
+            if (host == null)
+                return false;
             this.host = host;
 
             this.otpSeperatorToolStripItem = new ToolStripSeparator();

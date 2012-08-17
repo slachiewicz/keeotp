@@ -31,7 +31,7 @@ namespace KeeOtp
 
         public static OtpAuthData FromString(string data)
         {
-            var parameters = HttpUtility.ParseQueryString(data);
+            NameValueCollection parameters = ParseQueryString(data);
 
             if (parameters[keyParameter] == null)
                 throw new ArgumentException("Must have a key in the data");
@@ -50,6 +50,35 @@ namespace KeeOtp
             otpData.Size = GetIntOrDefault(parameters, sizeParameter, 6);
 
             return otpData;
+        }
+
+        /// <remarks>
+        /// Hacky query string parsing.  This was done due to reports
+        /// of people with just a 3.5 or 4.0 client profile getting errors
+        /// as the System.Web assembly where .net's implementation of
+        /// Url encoding and query string parsing is locate.
+        /// 
+        /// This should be fine since the only thing stored in the string
+        /// that needs to be encoded or decoded is the '=' sign.
+        /// </remarks>
+        private static NameValueCollection ParseQueryString(string data)
+        {
+            var collection = new NameValueCollection();
+
+            var parameters = data.Split(new[] { '&' }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var parameter in parameters)
+            {
+                if (parameter.Contains("="))
+                {
+                    var pieces = parameter.Split('=');
+                    if (pieces.Length != 2)
+                        continue;
+
+                    collection.Add(pieces[0], pieces[1].Replace("%3d", "="));
+                }
+            }
+
+            return collection;
         }
 
         private static int GetIntOrDefault(NameValueCollection parameters, string parameterKey, int defaultValue)
@@ -71,7 +100,7 @@ namespace KeeOtp
             get
             {
                 NameValueCollection collection = new NameValueCollection();
-                collection.Add(keyParameter, Base32.Encode(this.Key));
+                collection.Add(keyParameter, Base32.Encode(this.Key).Replace("=", "%3d"));
 
                 if (this.Type != KeeOtp.OtpType.Totp)
                     collection.Add(typeParameter, this.Type.ToString());
@@ -91,7 +120,7 @@ namespace KeeOtp
                 string data = string.Empty;
                 foreach (var key in collection.AllKeys)
                 {
-                    data += string.Format("{0}={1}&", key, HttpUtility.UrlEncode(collection[key]));
+                    data += string.Format("{0}={1}&", key, collection[key]);
                 }
 
                 return data.TrimEnd('&');
