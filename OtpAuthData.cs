@@ -54,10 +54,10 @@ namespace KeeOtp
 
         private static int GetIntOrDefault(NameValueCollection parameters, string parameterKey, int defaultValue)
         {
-            if (parameters[stepParameter] != null)
+            if (parameters[parameterKey] != null)
             {
                 int step;
-                if (int.TryParse(parameters[stepParameter], out step))
+                if (int.TryParse(parameters[parameterKey], out step))
                     return step;
                 else
                     return defaultValue;
