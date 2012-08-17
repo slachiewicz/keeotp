@@ -2,6 +2,8 @@ using System;
 using System.Diagnostics;
 using System.Windows.Forms;
 using KeePass.Plugins;
+using KeePassLib;
+using OtpSharp;
 
 namespace KeeOtp
 {
@@ -10,6 +12,7 @@ namespace KeeOtp
         private IPluginHost host = null;
         private ToolStripItem otpSeperatorToolStripItem;
         private ToolStripItem otpDialogToolStripItem;
+        private ToolStripItem otpCopyToolStripItem;
 
         public override bool Initialize(IPluginHost host)
         {
@@ -20,8 +23,12 @@ namespace KeeOtp
             this.otpSeperatorToolStripItem = new ToolStripSeparator();
             host.MainWindow.EntryContextMenu.Items.Add(this.otpSeperatorToolStripItem);
 
-            this.otpDialogToolStripItem = host.MainWindow.EntryContextMenu.Items.Add("One Time Password");
+            this.otpDialogToolStripItem = host.MainWindow.EntryContextMenu.Items.Add("Timed One Time Password");
             this.otpDialogToolStripItem.Click += new EventHandler(otpDialogToolStripItem_Click);
+
+            this.otpCopyToolStripItem = host.MainWindow.EntryContextMenu.Items.Add("Copy TOTP to Clipboard");
+            this.otpCopyToolStripItem.Click += otpCopyToolStripItem_Click;
+
             return true; // Initialization successful
         }
 
@@ -31,21 +38,63 @@ namespace KeeOtp
             ToolStripItemCollection menu = host.MainWindow.EntryContextMenu.Items;
             menu.Remove(otpSeperatorToolStripItem);
             menu.Remove(otpDialogToolStripItem);
+            menu.Remove(otpCopyToolStripItem);
         }
 
         void otpDialogToolStripItem_Click(object sender, EventArgs e)
         {
+            PwEntry entry;
+            if (GetSelectedSingleEntry(out entry))
+            {
+                ShowOneTimePasswords form = new ShowOneTimePasswords(entry, host);
+                form.ShowDialog();
+            }
+        }
+
+        void otpCopyToolStripItem_Click(object sender, EventArgs e)
+        {
+            PwEntry entry;
+            if (this.GetSelectedSingleEntry(out entry))
+            {
+                if (!entry.Strings.Exists(OtpAuthData.StringDictionaryKey))
+                {
+                    if (MessageBox.Show("Must configure TOTP on this entry.  Do you want to do this now?", "Not Configured", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        ShowOneTimePasswords form = new ShowOneTimePasswords(entry, host);
+                        form.ShowDialog();
+                    }
+                }
+                else
+                {
+                    var data = OtpAuthData.FromString(entry.Strings.Get(OtpAuthData.StringDictionaryKey).ReadString());
+                    var totp = new Totp(data.Key, step: data.Step, totpSize: data.Size);
+                    var text = totp.ComputeTotp().ToString().PadLeft(data.Size, '0');
+                    Clipboard.SetText(text);
+
+                    this.host.MainWindow.StartClipboardCountdown();
+                }
+            }
+        }
+
+        private bool GetSelectedSingleEntry(out PwEntry entry)
+        {
+            entry = null;
+
             var entries = this.host.MainWindow.GetSelectedEntries();
             if (entries.Length > 1)
+            {
                 MessageBox.Show("Please select only one entry");
+                return false;
+            }
             else if (entries.Length == 0)
+            {
                 MessageBox.Show("Please select an entry");
+                return false;
+            }
 
             // grab the entry that we care about
-            var entry = entries[0];
-
-            ShowOneTimePasswords form = new ShowOneTimePasswords(entry, host);
-            form.ShowDialog();
+            entry = entries[0];
+            return true;
         }
 
         public override string UpdateUrl
