@@ -68,9 +68,11 @@
             // 
             // labelInstructions
             // 
-            this.labelInstructions.Location = new System.Drawing.Point(31, 9);
+            this.labelInstructions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelInstructions.Location = new System.Drawing.Point(12, 9);
             this.labelInstructions.Name = "labelInstructions";
-            this.labelInstructions.Size = new System.Drawing.Size(226, 69);
+            this.labelInstructions.Size = new System.Drawing.Size(304, 69);
             this.labelInstructions.TabIndex = 3;
             this.labelInstructions.Text = "Enter this code in the verification system.  If problems occur contunually double" +
     " check that the clock on your computer is set precisely.  Be sure to double chec" +
@@ -80,7 +82,7 @@
             // 
             this.buttonClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonClose.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonClose.Location = new System.Drawing.Point(197, 231);
+            this.buttonClose.Location = new System.Drawing.Point(241, 231);
             this.buttonClose.Name = "buttonClose";
             this.buttonClose.Size = new System.Drawing.Size(75, 23);
             this.buttonClose.TabIndex = 4;
@@ -90,7 +92,7 @@
             // buttonEdit
             // 
             this.buttonEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonEdit.Location = new System.Drawing.Point(116, 231);
+            this.buttonEdit.Location = new System.Drawing.Point(160, 231);
             this.buttonEdit.Name = "buttonEdit";
             this.buttonEdit.Size = new System.Drawing.Size(75, 23);
             this.buttonEdit.TabIndex = 5;
@@ -102,7 +104,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 266);
+            this.ClientSize = new System.Drawing.Size(328, 266);
             this.Controls.Add(this.buttonEdit);
             this.Controls.Add(this.buttonClose);
             this.Controls.Add(this.labelInstructions);
