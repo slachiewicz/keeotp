@@ -46,7 +46,6 @@ namespace KeeOtp
         {
             if (this.DialogResult == System.Windows.Forms.DialogResult.Cancel)
                 return;
-
             try
             {
                 if (string.IsNullOrEmpty(this.textBoxKey.Text))
@@ -58,13 +57,40 @@ namespace KeeOtp
 
                 if (this.textBoxKey.Text.Length < 8)
                 {
-                    MessageBox.Show("Key must be at least 8 characters.  If you are provided less data then fill it out with '='s");
+                    MessageBox.Show("Key must be at least 8 characters.  If you are provided with less data then pad it up to 8 characters with '='s");
                     e.Cancel = true;
                     return;
                 }
 
                 var size = (this.radioButtonEight.Checked) ? 8 : 6;
-                var step = int.Parse(this.textBoxStep.Text);
+                int step;
+                
+                if (int.TryParse(this.textBoxStep.Text, out step))
+                {
+                    if (step != 30)
+                    {
+                        if (step <= 0)
+                        {
+                            this.textBoxStep.Text = "30";
+                            MessageBox.Show("The time step must be a non-zero positive integer.  The standard value is 30.  If you weren't specifically given an alternate value just use 30.");
+                            e.Cancel = true;
+                            return;
+                        }
+                        else if (MessageBox.Show("You have selected a non-standard time step.  30 is the standard recommended value.  You should only proceed if you were specifically told to use this time step size.  Do you wish to proceed?", "Non-standard time step size", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.No)
+                        {
+                            e.Cancel = true;
+                            return;
+                        }
+                    }
+                }
+                else
+                {
+                    this.textBoxStep.Text = "30";
+                    MessageBox.Show("The time step must be a non-zero positive integer.  The standard value is 30.  If you weren't specifically given an alternate value just use 30.");
+                    e.Cancel = true;
+                    return;
+                }
+
                 var key = Base32.Decode(this.textBoxKey.Text);
 
                 this.Data = new OtpAuthData()
@@ -78,14 +104,6 @@ namespace KeeOtp
             {
                 e.Cancel = true;
             }
-        }
-
-        private void textBoxStep_TextChanged(object sender, EventArgs e)
-        {
-            var text = this.textBoxStep.Text;
-            int value;
-            if (!int.TryParse(text, out value))
-                this.textBoxStep.Text = "30";
         }
 
         private void textBoxKey_TextChanged(object sender, EventArgs e)

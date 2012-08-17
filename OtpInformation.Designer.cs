@@ -53,7 +53,6 @@
             this.textBoxStep.Name = "textBoxStep";
             this.textBoxStep.Size = new System.Drawing.Size(23, 20);
             this.textBoxStep.TabIndex = 1;
-            this.textBoxStep.TextChanged += new System.EventHandler(this.textBoxStep_TextChanged);
             // 
             // radioButtonSix
             // 
