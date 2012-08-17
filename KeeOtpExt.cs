@@ -10,7 +10,7 @@ namespace KeeOtp
         private IPluginHost host = null;
         private ToolStripItem otpSeperatorToolStripItem;
         private ToolStripItem otpDialogToolStripItem;
-        
+
         public override bool Initialize(IPluginHost host)
         {
             Debug.Assert(host != null);
@@ -46,6 +46,11 @@ namespace KeeOtp
 
             ShowOneTimePasswords form = new ShowOneTimePasswords(entry, host);
             form.ShowDialog();
+        }
+
+        public override string UpdateUrl
+        {
+            get { return "https://s3.amazonaws.com/KeeOtp/version_manifest.txt"; }
         }
     }
 }

@@ -55,9 +55,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="KeePass">
-      <HintPath>Libraries\KeePass.exe</HintPath>
-    </Reference>
+    <Reference Include="KeePass" />
     <Reference Include="OtpSharp">
       <HintPath>Libraries\OtpSharp.dll</HintPath>
     </Reference>
