@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Windows.Forms;
 using KeePass.Plugins;
+using KeePass.Util;
 using KeePassLib;
 using OtpSharp;
 
@@ -69,9 +70,9 @@ namespace KeeOtp
                     var data = OtpAuthData.FromString(entry.Strings.Get(OtpAuthData.StringDictionaryKey).ReadString());
                     var totp = new Totp(data.Key, step: data.Step, totpSize: data.Size);
                     var text = totp.ComputeTotp().ToString().PadLeft(data.Size, '0');
-                    Clipboard.SetText(text);
 
-                    this.host.MainWindow.StartClipboardCountdown();
+                    if (ClipboardUtil.CopyAndMinimize(new KeePassLib.Security.ProtectedString(true, text), true, this.host.MainWindow, entry, this.host.Database))
+                        this.host.MainWindow.StartClipboardCountdown();
                 }
             }
         }
