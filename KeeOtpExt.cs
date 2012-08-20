@@ -2,7 +2,9 @@ using System;
 using System.Windows.Forms;
 using KeePass.Plugins;
 using KeePass.Util;
+using KeePass.Util.Spr;
 using KeePassLib;
+using KeePassLib.Utility;
 using OtpSharp;
 
 namespace KeeOtp
@@ -29,7 +31,27 @@ namespace KeeOtp
             this.otpCopyToolStripItem = host.MainWindow.EntryContextMenu.Items.Add("Copy TOTP to Clipboard");
             this.otpCopyToolStripItem.Click += otpCopyToolStripItem_Click;
 
+            SprEngine.FilterCompile += new EventHandler<SprEventArgs>(SprEngine_FilterCompile);
+
             return true; // Initialization successful
+        }
+
+        void SprEngine_FilterCompile(object sender, SprEventArgs e)
+        {
+            if ((e.Context.Flags & SprCompileFlags.ExtActive) == SprCompileFlags.ExtActive)
+            {
+                if (e.Text.IndexOf("{TOTP}", StringComparison.InvariantCultureIgnoreCase) >= 0)
+                {
+                    if (e.Context.Entry.Strings.Exists(OtpAuthData.StringDictionaryKey))
+                    {
+                        var data = OtpAuthData.FromString(e.Context.Entry.Strings.Get(OtpAuthData.StringDictionaryKey).ReadString());
+                        var totp = new Totp(data.Key, step: data.Step, totpSize: data.Size);
+                        var text = totp.ComputeTotp().ToString().PadLeft(data.Size, '0');
+
+                        e.Text = StrUtil.ReplaceCaseInsensitive(e.Text, "{TOTP}", text);
+                    }
+                }
+            }
         }
 
         public override void Terminate()
