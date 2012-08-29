@@ -113,5 +113,11 @@ namespace KeeOtp
             else
                 this.ShowCode();
         }
+
+        private void buttonIncorrect_Click(object sender, EventArgs e)
+        {
+            Troubleshooting troubleshooting = new Troubleshooting();
+            troubleshooting.ShowDialog();
+        }
     }
 }
