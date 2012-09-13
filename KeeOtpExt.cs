@@ -103,20 +103,22 @@ namespace KeeOtp
             entry = null;
 
             var entries = this.host.MainWindow.GetSelectedEntries();
-            if (entries.Length > 1)
-            {
-                MessageBox.Show("Please select only one entry");
-                return false;
-            }
-            else if (entries.Length == 0)
+            if (entries == null || entries.Length == 0)
             {
                 MessageBox.Show("Please select an entry");
                 return false;
             }
-
-            // grab the entry that we care about
-            entry = entries[0];
-            return true;
+            else if (entries.Length > 1)
+            {
+                MessageBox.Show("Please select only one entry");
+                return false;
+            }
+            else
+            {
+                // grab the entry that we care about
+                entry = entries[0];
+                return true;
+            }
         }
 
         public override string UpdateUrl
