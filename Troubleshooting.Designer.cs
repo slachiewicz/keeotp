@@ -31,6 +31,7 @@
             this.labelHeader = new System.Windows.Forms.Label();
             this.buttonPingGoogle = new System.Windows.Forms.Button();
             this.buttonTroubleshootingWebsite = new System.Windows.Forms.Button();
+            this.progressBarGettingTimeCorrection = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
             // labelHeader
@@ -65,11 +66,21 @@
             this.buttonTroubleshootingWebsite.UseVisualStyleBackColor = true;
             this.buttonTroubleshootingWebsite.Click += new System.EventHandler(this.buttonTroubleshootingWebsite_Click);
             // 
+            // progressBarGettingTimeCorrection
+            // 
+            this.progressBarGettingTimeCorrection.Location = new System.Drawing.Point(16, 55);
+            this.progressBarGettingTimeCorrection.Name = "progressBarGettingTimeCorrection";
+            this.progressBarGettingTimeCorrection.Size = new System.Drawing.Size(338, 23);
+            this.progressBarGettingTimeCorrection.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.progressBarGettingTimeCorrection.TabIndex = 3;
+            this.progressBarGettingTimeCorrection.Visible = false;
+            // 
             // Troubleshooting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(366, 129);
+            this.Controls.Add(this.progressBarGettingTimeCorrection);
             this.Controls.Add(this.buttonTroubleshootingWebsite);
             this.Controls.Add(this.buttonPingGoogle);
             this.Controls.Add(this.labelHeader);
@@ -85,5 +96,6 @@
         private System.Windows.Forms.Label labelHeader;
         private System.Windows.Forms.Button buttonPingGoogle;
         private System.Windows.Forms.Button buttonTroubleshootingWebsite;
+        private System.Windows.Forms.ProgressBar progressBarGettingTimeCorrection;
     }
 }
