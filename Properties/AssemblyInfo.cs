@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General assembly properties
@@ -19,5 +18,5 @@ using System.Runtime.InteropServices;
 [assembly: Guid("9CCC719B-32BA-4936-A6D7-DBF0659C16EF")]
 
 // Assembly version information
-[assembly: AssemblyVersion("1.0.3")]
-[assembly: AssemblyFileVersion("1.0.3")]
+[assembly: AssemblyVersion("1.0.4")]
+[assembly: AssemblyFileVersion("1.0.4")]
