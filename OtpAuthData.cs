@@ -20,7 +20,7 @@ namespace KeeOtp
         const string sizeParameter = "size";
         const string counterParameter = "counter";
 
-        public byte[] Key { get; set; }
+        public Key Key { get; set; }
         public OtpType Type { get; set; }
 
         public int Step { get; set; }
@@ -38,7 +38,8 @@ namespace KeeOtp
 
             var otpData = new OtpAuthData();
 
-            otpData.Key = Base32.Decode(parameters[keyParameter]);
+            otpData.Key = ProtectedKey.CreateProtectedKeyAndDestroyPlaintextKey(Base32.Decode(parameters[keyParameter]));
+
             if (parameters[typeParameter] != null)
                 otpData.Type = (OtpType)Enum.Parse(typeof(OtpType), parameters[typeParameter]);
 
@@ -100,7 +101,12 @@ namespace KeeOtp
             get
             {
                 NameValueCollection collection = new NameValueCollection();
-                collection.Add(keyParameter, Base32.Encode(this.Key).Replace("=", "%3d"));
+                string base32Key = null;
+                this.Key.UsePlainKey(key =>
+                {
+                    base32Key = Base32.Encode(key).Replace("=", "%3d");
+                });
+                collection.Add(keyParameter, base32Key);
 
                 if (this.Type != KeeOtp.OtpType.Totp)
                     collection.Add(typeParameter, this.Type.ToString());
