@@ -19,7 +19,7 @@ namespace KeeOtp
         {
             if (this.Data != null)
             {
-                this.textBoxKey.Text = Base32.Encode(this.Data.Key);
+                this.Data.Key.UsePlainKey(key =>this.textBoxKey.Text = Base32.Encode(key));
                 this.textBoxStep.Text = this.Data.Step.ToString();
 
                 if (this.Data.Size == 8)
@@ -86,8 +86,7 @@ namespace KeeOtp
                     return;
                 }
 
-                var key = Base32.Decode(this.textBoxKey.Text);
-
+                var key = ProtectedKey.CreateProtectedKeyAndDestroyPlaintextKey(Base32.Decode(this.textBoxKey.Text));
                 this.Data = new OtpAuthData()
                 {
                     Key = key,
