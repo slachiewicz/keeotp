@@ -59,7 +59,7 @@ namespace KeeOtp
                         asyncAction();
                     if (continuation != null)
                     {
-                        context.Post(state =>
+                        this.PostDelegateToSynchronizationContext(() =>
                         {
                             try
                             {
@@ -73,7 +73,7 @@ namespace KeeOtp
                             {
                                 PostFinallyActionIfNeeded();
                             }
-                        }, null);
+                        });
                     }
                 }
                 catch (Exception e)
@@ -98,10 +98,7 @@ namespace KeeOtp
                     if (!finallyPosted)
                     {
                         finallyPosted = true;
-                        if (context != null)
-                            context.Post(state => finallyAction(), null);
-                        else
-                            ThreadPool.QueueUserWorkItem(state => finallyAction());
+                        PostDelegateToSynchronizationContext(finallyAction);
                     }
                 }
             }
@@ -116,12 +113,24 @@ namespace KeeOtp
                     if (!catchPosted)
                     {
                         catchPosted = true;
-                        if (context != null)
-                            context.Post(state => catchAction(e), null);
-                        else
-                            ThreadPool.QueueUserWorkItem(state => catchAction(e));
+                        PostDelegateToSynchronizationContext(() => catchAction(e));
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// If a synchronization context was available when the object was constructed, post the delegate.  Otherwise queue it up on the thread pool.
+        /// </summary>
+        /// <param name="action">Delegate to queue</param>
+        private void PostDelegateToSynchronizationContext(Action action)
+        {
+            if (action != null)
+            {
+                if (context != null)
+                    context.Post(state => action(), null);
+                else
+                    ThreadPool.QueueUserWorkItem(state => action());
             }
         }
     }
