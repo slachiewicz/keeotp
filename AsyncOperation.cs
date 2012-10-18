@@ -26,6 +26,16 @@ namespace KeeOtp
         bool catchPosted = false;
         bool finallyPosted = false;
 
+        /// <summary>
+        /// Create an instance of Async Operation.
+        /// </summary>
+        /// <remarks>
+        /// This must be done on the UI thread if continuations and error handling are to also occur on the UI thread.
+        /// </remarks>
+        /// <param name="asyncAction">The action to run in the background</param>
+        /// <param name="continuation">The continuation to run agains the current synchronization context</param>
+        /// <param name="catchAction">Error handling to run agains the current synchronization context</param>
+        /// <param name="finallyAction">Finally to run agains the current synchronization context</param>
         public AsyncOperation(Action asyncAction, Action continuation, Action<Exception> catchAction, Action finallyAction)
         {
             context = SynchronizationContext.Current;
@@ -36,6 +46,9 @@ namespace KeeOtp
             this.finallyAction = finallyAction;
         }
 
+        /// <summary>
+        /// Run the async action delegate provided upon construction and post any continuations to the synchronization context that was avilable at construction
+        /// </summary>
         public void Run()
         {
             Action runAction = () =>
@@ -73,8 +86,7 @@ namespace KeeOtp
                 }
             };
 
-            // grab a thread pool thread and run
-            runAction.BeginInvoke(null, null);
+            ThreadPool.QueueUserWorkItem(state => runAction());
         }
 
         private void PostFinallyActionIfNeeded()
@@ -86,7 +98,10 @@ namespace KeeOtp
                     if (!finallyPosted)
                     {
                         finallyPosted = true;
-                        context.Post(state => finallyAction(), null);
+                        if (context != null)
+                            context.Post(state => finallyAction(), null);
+                        else
+                            ThreadPool.QueueUserWorkItem(state => finallyAction());
                     }
                 }
             }
@@ -101,7 +116,10 @@ namespace KeeOtp
                     if (!catchPosted)
                     {
                         catchPosted = true;
-                        context.Post(state => catchAction(e), null);
+                        if (context != null)
+                            context.Post(state => catchAction(e), null);
+                        else
+                            ThreadPool.QueueUserWorkItem(state => catchAction(e));
                     }
                 }
             }
