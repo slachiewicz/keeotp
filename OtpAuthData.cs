@@ -96,6 +96,15 @@ namespace KeeOtp
                 return defaultValue;
         }
 
+        /// <remarks>
+        /// Hacky query string parsing.  This was done due to reports
+        /// of people with just a 3.5 or 4.0 client profile getting errors
+        /// as the System.Web assembly where .net's implementation of
+        /// Url encoding and query string parsing is locate.
+        /// 
+        /// This should be fine since the only thing stored in the string
+        /// that needs to be encoded or decoded is the '=' sign.
+        /// </remarks>
         public string EncodedString
         {
             get

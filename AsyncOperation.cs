@@ -7,7 +7,7 @@ using System.Threading;
 namespace KeeOtp
 {
     /// <summary>
-    /// A helper class to help yout with async operations since we aren't using tasks to avoid any reliance on the TPL
+    /// A helper class to help you with async operations since we aren't using tasks to avoid any reliance on the TPL
     /// </summary>
     /// <remarks>
     /// This is a crude replacement for tasks in the .net 4.0 TPL.  In order to make this plugin work on machines
