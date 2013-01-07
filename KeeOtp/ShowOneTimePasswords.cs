@@ -23,6 +23,15 @@ namespace KeeOtp
             InitializeComponent();
             this.Shown += (sender, e) => FormWasShown();
             this.timerUpdateTotp.Tick += (sender, e) => UpdateDisplay();
+
+            pictureBoxBanner.Image = KeePass.UI.BannerFactory.CreateBanner(pictureBoxBanner.Width,
+                pictureBoxBanner.Height,
+                KeePass.UI.BannerStyle.Default,
+                Resources.clock.GetThumbnailImage(32, 32, null, IntPtr.Zero),
+                "Timed Passwords",
+                "Enter this code in the verification system.");
+
+            this.Icon = host.MainWindow.Icon;
         }
 
         private void UpdateDisplay()
@@ -93,7 +102,7 @@ namespace KeeOtp
             this.labelOtp.Text = "xxxxxx";
             this.totp = null;
 
-            var addEditForm = new OtpInformation();
+            var addEditForm = new OtpInformation(this.host);
             addEditForm.Data = this.data;
 
             var result = addEditForm.ShowDialog();
@@ -116,7 +125,7 @@ namespace KeeOtp
 
         private void buttonIncorrect_Click(object sender, EventArgs e)
         {
-            Troubleshooting troubleshooting = new Troubleshooting();
+            Troubleshooting troubleshooting = new Troubleshooting(this.host);
             troubleshooting.ShowDialog();
         }
     }

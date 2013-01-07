@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using KeePass.Plugins;
 using OtpSharp;
 
 namespace KeeOtp
@@ -9,17 +10,18 @@ namespace KeeOtp
         const string validKeyChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
         public OtpAuthData Data { get; set; }
 
-        public OtpInformation()
+        public OtpInformation(IPluginHost host)
         {
             InitializeComponent();
             this.Shown += (sender, e) => FormWasShown();
+            this.Icon = host.MainWindow.Icon;
         }
 
         private void FormWasShown()
         {
             if (this.Data != null)
             {
-                this.Data.Key.UsePlainKey(key =>this.textBoxKey.Text = Base32.Encode(key));
+                this.Data.Key.UsePlainKey(key => this.textBoxKey.Text = Base32.Encode(key));
                 this.textBoxStep.Text = this.Data.Step.ToString();
 
                 if (this.Data.Size == 8)
@@ -59,7 +61,7 @@ namespace KeeOtp
 
                 var size = (this.radioButtonEight.Checked) ? 8 : 6;
                 int step;
-                
+
                 if (int.TryParse(this.textBoxStep.Text, out step))
                 {
                     if (step != 30)
@@ -86,7 +88,7 @@ namespace KeeOtp
                     return;
                 }
 
-                var key = ProtectedKey.CreateProtectedKeyAndDestroyPlaintextKey(Base32.Decode(this.textBoxKey.Text));
+                var key = ProtectedKey.CreateProtectedKeyAndDestroyPlaintextKey(Base32.Decode(this.textBoxKey.Text.Replace(" ", string.Empty)));
                 this.Data = new OtpAuthData()
                 {
                     Key = key,
@@ -102,7 +104,7 @@ namespace KeeOtp
 
         private void textBoxKey_TextChanged(object sender, EventArgs e)
         {
-            var unpaddedBase32 = this.textBoxKey.Text.ToUpperInvariant().TrimEnd('=');
+            var unpaddedBase32 = this.textBoxKey.Text.Replace(" ", string.Empty).ToUpperInvariant().TrimEnd('=');
 
             bool invalid = false;
             foreach (var c in unpaddedBase32)
