@@ -74,6 +74,11 @@
     <Compile Include="OtpType.cs" />
     <Compile Include="KeeOtpExt.cs" />
     <Compile Include="OtpAuthData.cs" />
+    <Compile Include="Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="ShowOneTimePasswords.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -109,6 +114,10 @@
     <EmbeddedResource Include="OtpInformation.resx">
       <DependentUpon>OtpInformation.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="ShowOneTimePasswords.resx">
       <DependentUpon>ShowOneTimePasswords.cs</DependentUpon>
     </EmbeddedResource>
@@ -121,6 +130,12 @@
       <Project>{df432b25-4ebe-4c89-b7bd-0553cb6301b9}</Project>
       <Name>OtpSharp</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\clock.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\lock-key.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

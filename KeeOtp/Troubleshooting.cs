@@ -2,15 +2,17 @@
 using System.Diagnostics;
 using System.Threading;
 using System.Windows.Forms;
+using KeePass.Plugins;
 using OtpSharp;
 
 namespace KeeOtp
 {
     public partial class Troubleshooting : Form
     {
-        public Troubleshooting()
+        public Troubleshooting(IPluginHost host)
         {
             InitializeComponent();
+            this.Icon = host.MainWindow.Icon;
         }
 
         private void buttonPingGoogle_Click(object sender, EventArgs e)
