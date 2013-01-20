@@ -1,11 +1,11 @@
-using System;
-using System.Windows.Forms;
 using KeePass.Plugins;
 using KeePass.Util;
 using KeePass.Util.Spr;
 using KeePassLib;
 using KeePassLib.Utility;
 using OtpSharp;
+using System;
+using System.Windows.Forms;
 
 namespace KeeOtp
 {
@@ -15,6 +15,9 @@ namespace KeeOtp
         private ToolStripItem otpSeperatorToolStripItem;
         private ToolStripItem otpDialogToolStripItem;
         private ToolStripItem otpCopyToolStripItem;
+
+        private ToolStripItem otpTopDialogToolStripItem;
+        private ToolStripItem otpTopSeperatorToolStripItem;
 
         public override bool Initialize(IPluginHost host)
         {
@@ -32,6 +35,12 @@ namespace KeeOtp
             this.otpCopyToolStripItem.Click += otpCopyToolStripItem_Click;
 
             SprEngine.FilterCompile += new EventHandler<SprEventArgs>(SprEngine_FilterCompile);
+
+            this.otpTopSeperatorToolStripItem = new ToolStripSeparator();
+            host.MainWindow.ToolsMenu.DropDownItems.Add(this.otpTopSeperatorToolStripItem);
+            this.otpTopDialogToolStripItem = host.MainWindow.ToolsMenu.DropDownItems.Add("Timed One Time Password",
+                null,
+                otpDialogToolStripItem_Click);
 
             return true; // Initialization successful
         }
@@ -61,6 +70,10 @@ namespace KeeOtp
             menu.Remove(otpSeperatorToolStripItem);
             menu.Remove(otpDialogToolStripItem);
             menu.Remove(otpCopyToolStripItem);
+
+            var toolsMenu = host.MainWindow.ToolsMenu;
+            toolsMenu.DropDownItems.Remove(this.otpTopSeperatorToolStripItem);
+            toolsMenu.DropDownItems.Remove(this.otpTopDialogToolStripItem);
         }
 
         void otpDialogToolStripItem_Click(object sender, EventArgs e)
