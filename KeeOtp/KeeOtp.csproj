@@ -117,7 +117,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="OtpSharp\OtpSharp\OtpSharp.csproj">
+    <ProjectReference Include="..\OtpSharp\OtpSharp\OtpSharp.csproj">
       <Project>{df432b25-4ebe-4c89-b7bd-0553cb6301b9}</Project>
       <Name>OtpSharp</Name>
     </ProjectReference>
