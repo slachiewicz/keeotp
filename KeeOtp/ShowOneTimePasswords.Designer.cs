@@ -42,13 +42,15 @@
             // 
             // labelOtp
             // 
-            this.labelOtp.AutoSize = true;
+            this.labelOtp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.labelOtp.Font = new System.Drawing.Font("Microsoft Sans Serif", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelOtp.Location = new System.Drawing.Point(24, 73);
+            this.labelOtp.Location = new System.Drawing.Point(-2, 73);
             this.labelOtp.Name = "labelOtp";
-            this.labelOtp.Size = new System.Drawing.Size(224, 73);
+            this.labelOtp.Size = new System.Drawing.Size(349, 73);
             this.labelOtp.TabIndex = 0;
             this.labelOtp.Text = "xxxxxx";
+            this.labelOtp.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // labelRemaining
             // 
@@ -72,7 +74,7 @@
             // 
             this.buttonClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonClose.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonClose.Location = new System.Drawing.Point(241, 181);
+            this.buttonClose.Location = new System.Drawing.Point(258, 181);
             this.buttonClose.Name = "buttonClose";
             this.buttonClose.Size = new System.Drawing.Size(75, 23);
             this.buttonClose.TabIndex = 4;
@@ -82,7 +84,7 @@
             // buttonEdit
             // 
             this.buttonEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonEdit.Location = new System.Drawing.Point(160, 181);
+            this.buttonEdit.Location = new System.Drawing.Point(177, 181);
             this.buttonEdit.Name = "buttonEdit";
             this.buttonEdit.Size = new System.Drawing.Size(75, 23);
             this.buttonEdit.TabIndex = 5;
@@ -107,7 +109,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBoxBanner.Location = new System.Drawing.Point(-2, 0);
             this.pictureBoxBanner.Name = "pictureBoxBanner";
-            this.pictureBoxBanner.Size = new System.Drawing.Size(332, 58);
+            this.pictureBoxBanner.Size = new System.Drawing.Size(349, 58);
             this.pictureBoxBanner.TabIndex = 7;
             this.pictureBoxBanner.TabStop = false;
             // 
@@ -115,7 +117,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(328, 219);
+            this.ClientSize = new System.Drawing.Size(345, 219);
             this.Controls.Add(this.pictureBoxBanner);
             this.Controls.Add(this.buttonIncorrect);
             this.Controls.Add(this.buttonEdit);

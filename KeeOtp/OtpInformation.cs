@@ -110,10 +110,10 @@ namespace KeeOtp
                         return;
                     }
                     // need to do encoding here
-                    key = ProtectedKey.CreateProtectedKeyAndDestroyPlaintextKey(Base32.Decode(this.textBoxKey.Text.Replace(" ", string.Empty)));
+                    key = ProtectedKey.CreateProtectedKeyAndDestroyPlaintextKey(Base32.Decode(this.textBoxKey.Text.Replace(" ", string.Empty).Replace("-", string.Empty)));
                 }
                 else
-                    key = ProtectedKey.CreateProtectedKeyAndDestroyPlaintextKey(Base32.Decode(this.textBoxKey.Text.Replace(" ", string.Empty)));
+                    key = ProtectedKey.CreateProtectedKeyAndDestroyPlaintextKey(Base32.Decode(this.textBoxKey.Text.Replace(" ", string.Empty).Replace("-", string.Empty)));
 
                 this.Data = new OtpAuthData()
                 {

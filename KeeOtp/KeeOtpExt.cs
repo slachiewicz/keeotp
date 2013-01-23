@@ -28,8 +28,9 @@ namespace KeeOtp
             this.otpSeperatorToolStripItem = new ToolStripSeparator();
             host.MainWindow.EntryContextMenu.Items.Add(this.otpSeperatorToolStripItem);
 
-            this.otpDialogToolStripItem = host.MainWindow.EntryContextMenu.Items.Add("Timed One Time Password");
-            this.otpDialogToolStripItem.Click += new EventHandler(otpDialogToolStripItem_Click);
+            this.otpDialogToolStripItem = host.MainWindow.EntryContextMenu.Items.Add("Timed One Time Password",
+                Resources.clock,
+                otpDialogToolStripItem_Click);
 
             this.otpCopyToolStripItem = host.MainWindow.EntryContextMenu.Items.Add("Copy TOTP to Clipboard");
             this.otpCopyToolStripItem.Click += otpCopyToolStripItem_Click;
@@ -39,7 +40,7 @@ namespace KeeOtp
             this.otpTopSeperatorToolStripItem = new ToolStripSeparator();
             host.MainWindow.ToolsMenu.DropDownItems.Add(this.otpTopSeperatorToolStripItem);
             this.otpTopDialogToolStripItem = host.MainWindow.ToolsMenu.DropDownItems.Add("Timed One Time Password",
-                null,
+                Resources.clock,
                 otpDialogToolStripItem_Click);
 
             return true; // Initialization successful
