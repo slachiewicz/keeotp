@@ -1,11 +1,11 @@
+using System;
+using System.Windows.Forms;
 using KeePass.Plugins;
 using KeePass.Util;
 using KeePass.Util.Spr;
 using KeePassLib;
 using KeePassLib.Utility;
 using OtpSharp;
-using System;
-using System.Windows.Forms;
 
 namespace KeeOtp
 {
@@ -18,6 +18,7 @@ namespace KeeOtp
 
         private ToolStripItem otpTopDialogToolStripItem;
         private ToolStripItem otpTopSeperatorToolStripItem;
+        private const string totpPlaceHolderHint = "{TOTP}";
 
         public override bool Initialize(IPluginHost host)
         {
@@ -42,6 +43,9 @@ namespace KeeOtp
             this.otpTopDialogToolStripItem = host.MainWindow.ToolsMenu.DropDownItems.Add("Timed One Time Password",
                 Resources.clock,
                 otpDialogToolStripItem_Click);
+
+            // this adds a hint on the placeholder form under the "plugin provided" section of placeholders
+            SprEngine.FilterPlaceholderHints.Add(totpPlaceHolderHint);
 
             return true; // Initialization successful
         }
@@ -75,6 +79,8 @@ namespace KeeOtp
             var toolsMenu = host.MainWindow.ToolsMenu;
             toolsMenu.DropDownItems.Remove(this.otpTopSeperatorToolStripItem);
             toolsMenu.DropDownItems.Remove(this.otpTopDialogToolStripItem);
+
+            SprEngine.FilterPlaceholderHints.Remove(totpPlaceHolderHint);
         }
 
         void otpDialogToolStripItem_Click(object sender, EventArgs e)
