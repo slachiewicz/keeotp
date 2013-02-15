@@ -18,7 +18,7 @@ namespace KeeOtp
 
         private ToolStripItem otpTopDialogToolStripItem;
         private ToolStripItem otpTopSeperatorToolStripItem;
-        private const string totpPlaceHolderHint = "{TOTP}";
+        private const string totpPlaceHolder = "{TOTP}";
 
         public override bool Initialize(IPluginHost host)
         {
@@ -45,7 +45,7 @@ namespace KeeOtp
                 otpDialogToolStripItem_Click);
 
             // this adds a hint on the placeholder form under the "plugin provided" section of placeholders
-            SprEngine.FilterPlaceholderHints.Add(totpPlaceHolderHint);
+            SprEngine.FilterPlaceholderHints.Add(totpPlaceHolder);
 
             return true; // Initialization successful
         }
@@ -54,7 +54,7 @@ namespace KeeOtp
         {
             if ((e.Context.Flags & SprCompileFlags.ExtActive) == SprCompileFlags.ExtActive)
             {
-                if (e.Text.IndexOf("{TOTP}", StringComparison.InvariantCultureIgnoreCase) >= 0)
+                if (e.Text.IndexOf(totpPlaceHolder, StringComparison.InvariantCultureIgnoreCase) >= 0)
                 {
                     if (e.Context.Entry.Strings.Exists(OtpAuthData.StringDictionaryKey))
                     {
@@ -80,7 +80,7 @@ namespace KeeOtp
             toolsMenu.DropDownItems.Remove(this.otpTopSeperatorToolStripItem);
             toolsMenu.DropDownItems.Remove(this.otpTopDialogToolStripItem);
 
-            SprEngine.FilterPlaceholderHints.Remove(totpPlaceHolderHint);
+            SprEngine.FilterPlaceholderHints.Remove(totpPlaceHolder);
         }
 
         void otpDialogToolStripItem_Click(object sender, EventArgs e)
