@@ -111,6 +111,7 @@ namespace KeeOtp
                 this.data = addEditForm.Data;
                 // set the data
                 entry.Strings.Set(OtpAuthData.StringDictionaryKey, new ProtectedString(true, this.data.EncodedString));
+                entry.Touch(true, false);
 
                 // indicate that a change was made, must save
                 host.MainWindow.UpdateUI(false, null, true, host.Database.RootGroup, true, null, true);
