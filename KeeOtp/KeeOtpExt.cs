@@ -30,6 +30,7 @@ namespace KeeOtp
             host.MainWindow.EntryContextMenu.Items.Insert(11, this.otpDialogToolStripItem);
 
             this.otpCopyToolStripItem = new ToolStripMenuItem("Copy TOTP");
+            this.otpCopyToolStripItem.ShortcutKeys = Keys.T | Keys.Control;
             this.otpCopyToolStripItem.Click += otpCopyToolStripItem_Click;
             host.MainWindow.EntryContextMenu.Items.Insert(2, this.otpCopyToolStripItem);
             host.MainWindow.EntryContextMenu.Opening += entryContextMenu_Opening;
