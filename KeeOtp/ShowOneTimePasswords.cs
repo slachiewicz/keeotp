@@ -21,7 +21,6 @@ namespace KeeOtp
             this.host = host;
             this.entry = entry;
             InitializeComponent();
-            this.Shown += (sender, e) => FormWasShown();
             this.timerUpdateTotp.Tick += (sender, e) => UpdateDisplay();
 
             pictureBoxBanner.Image = KeePass.UI.BannerFactory.CreateBanner(pictureBoxBanner.Width,
@@ -32,6 +31,11 @@ namespace KeeOtp
                 "Enter this code in the verification system.");
 
             this.Icon = host.MainWindow.Icon;
+        }
+
+        private void ShowOneTimePasswords_Load(object sender, EventArgs e)
+        {
+            FormWasShown();
         }
 
         private void UpdateDisplay()
