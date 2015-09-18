@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Windows.Forms;
 using KeePass.Plugins;
 using KeePass.Util;
@@ -12,12 +13,9 @@ namespace KeeOtp
     public sealed class KeeOtpExt : Plugin
     {
         private IPluginHost host = null;
-        private ToolStripItem otpSeperatorToolStripItem;
-        private ToolStripItem otpDialogToolStripItem;
-        private ToolStripItem otpCopyToolStripItem;
-
-        private ToolStripItem otpTopDialogToolStripItem;
-        private ToolStripItem otpTopSeperatorToolStripItem;
+        private ToolStripMenuItem otpDialogToolStripItem;
+        private ToolStripMenuItem otpCopyToolStripItem;
+        
         private const string totpPlaceHolder = "{TOTP}";
 
         public override bool Initialize(IPluginHost host)
@@ -26,23 +24,17 @@ namespace KeeOtp
                 return false;
             this.host = host;
 
-            this.otpSeperatorToolStripItem = new ToolStripSeparator();
-            host.MainWindow.EntryContextMenu.Items.Add(this.otpSeperatorToolStripItem);
-
-            this.otpDialogToolStripItem = host.MainWindow.EntryContextMenu.Items.Add("Timed One Time Password",
+            this.otpDialogToolStripItem = new ToolStripMenuItem("Timed One Time Password",
                 Resources.clock,
                 otpDialogToolStripItem_Click);
+            host.MainWindow.EntryContextMenu.Items.Insert(11, this.otpDialogToolStripItem);
 
-            this.otpCopyToolStripItem = host.MainWindow.EntryContextMenu.Items.Add("Copy TOTP to Clipboard");
+            this.otpCopyToolStripItem = new ToolStripMenuItem("Copy TOTP");
             this.otpCopyToolStripItem.Click += otpCopyToolStripItem_Click;
+            host.MainWindow.EntryContextMenu.Items.Insert(2, this.otpCopyToolStripItem);
+            host.MainWindow.EntryContextMenu.Opening += entryContextMenu_Opening;
 
             SprEngine.FilterCompile += new EventHandler<SprEventArgs>(SprEngine_FilterCompile);
-
-            this.otpTopSeperatorToolStripItem = new ToolStripSeparator();
-            host.MainWindow.ToolsMenu.DropDownItems.Add(this.otpTopSeperatorToolStripItem);
-            this.otpTopDialogToolStripItem = host.MainWindow.ToolsMenu.DropDownItems.Add("Timed One Time Password",
-                Resources.clock,
-                otpDialogToolStripItem_Click);
 
             // this adds a hint on the placeholder form under the "plugin provided" section of placeholders
             SprEngine.FilterPlaceholderHints.Add(totpPlaceHolder);
@@ -72,15 +64,18 @@ namespace KeeOtp
         {
             // Remove all of our menu items
             ToolStripItemCollection menu = host.MainWindow.EntryContextMenu.Items;
-            menu.Remove(otpSeperatorToolStripItem);
             menu.Remove(otpDialogToolStripItem);
             menu.Remove(otpCopyToolStripItem);
 
-            var toolsMenu = host.MainWindow.ToolsMenu;
-            toolsMenu.DropDownItems.Remove(this.otpTopSeperatorToolStripItem);
-            toolsMenu.DropDownItems.Remove(this.otpTopDialogToolStripItem);
-
             SprEngine.FilterPlaceholderHints.Remove(totpPlaceHolder);
+        }
+
+        private void entryContextMenu_Opening(object sender, CancelEventArgs e)
+        {
+            PwEntry[] selectedEntries = this.host.MainWindow.GetSelectedEntries();
+            this.otpCopyToolStripItem.Enabled =
+                this.otpDialogToolStripItem.Enabled =
+                selectedEntries != null && selectedEntries.Length == 1;
         }
 
         void otpDialogToolStripItem_Click(object sender, EventArgs e)
