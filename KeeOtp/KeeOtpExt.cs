@@ -15,7 +15,7 @@ namespace KeeOtp
         private IPluginHost host = null;
         private ToolStripMenuItem otpDialogToolStripItem;
         private ToolStripMenuItem otpCopyToolStripItem;
-        
+
         private const string totpPlaceHolder = "{TOTP}";
 
         public override bool Initialize(IPluginHost host)
@@ -52,7 +52,7 @@ namespace KeeOtp
                     if (e.Context.Entry.Strings.Exists(OtpAuthData.StringDictionaryKey))
                     {
                         var data = OtpAuthData.FromString(e.Context.Entry.Strings.Get(OtpAuthData.StringDictionaryKey).ReadString());
-                        var totp = new Totp(data.Key, step: data.Step, totpSize: data.Size);
+                        var totp = new Totp(data.Key, step: data.Step, mode: data.OtpHashMode, totpSize: data.Size);
                         var text = totp.ComputeTotp().ToString().PadLeft(data.Size, '0');
 
                         e.Text = StrUtil.ReplaceCaseInsensitive(e.Text, "{TOTP}", text);
@@ -105,7 +105,7 @@ namespace KeeOtp
                 else
                 {
                     var data = OtpAuthData.FromString(entry.Strings.Get(OtpAuthData.StringDictionaryKey).ReadString());
-                    var totp = new Totp(data.Key, step: data.Step, totpSize: data.Size);
+                    var totp = new Totp(data.Key, step: data.Step, mode: data.OtpHashMode, totpSize: data.Size);
                     var text = totp.ComputeTotp().ToString().PadLeft(data.Size, '0');
 
                     if (ClipboardUtil.CopyAndMinimize(new KeePassLib.Security.ProtectedString(true, text), true, this.host.MainWindow, entry, this.host.Database))
