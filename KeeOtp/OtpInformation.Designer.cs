@@ -42,7 +42,12 @@
             this.radioButtonHex = new System.Windows.Forms.RadioButton();
             this.pictureBoxBanner = new System.Windows.Forms.PictureBox();
             this.checkBoxCustomSettings = new System.Windows.Forms.CheckBox();
+            this.radioButtonSha256 = new System.Windows.Forms.RadioButton();
+            this.radioButtonSha512 = new System.Windows.Forms.RadioButton();
+            this.radioButtonSha1 = new System.Windows.Forms.RadioButton();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBanner)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBoxKey
@@ -185,11 +190,57 @@
             this.checkBoxCustomSettings.UseVisualStyleBackColor = true;
             this.checkBoxCustomSettings.CheckedChanged += new System.EventHandler(this.checkBoxCustomSettings_CheckedChanged);
             // 
+            // radioButtonSha256
+            // 
+            this.radioButtonSha256.AutoSize = true;
+            this.radioButtonSha256.Location = new System.Drawing.Point(6, 49);
+            this.radioButtonSha256.Name = "radioButtonSha256";
+            this.radioButtonSha256.Size = new System.Drawing.Size(65, 17);
+            this.radioButtonSha256.TabIndex = 14;
+            this.radioButtonSha256.TabStop = true;
+            this.radioButtonSha256.Text = "Sha-256";
+            this.radioButtonSha256.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonSha512
+            // 
+            this.radioButtonSha512.AutoSize = true;
+            this.radioButtonSha512.Location = new System.Drawing.Point(6, 72);
+            this.radioButtonSha512.Name = "radioButtonSha512";
+            this.radioButtonSha512.Size = new System.Drawing.Size(65, 17);
+            this.radioButtonSha512.TabIndex = 15;
+            this.radioButtonSha512.TabStop = true;
+            this.radioButtonSha512.Text = "Sha-512";
+            this.radioButtonSha512.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonSha1
+            // 
+            this.radioButtonSha1.AutoSize = true;
+            this.radioButtonSha1.Location = new System.Drawing.Point(6, 26);
+            this.radioButtonSha1.Name = "radioButtonSha1";
+            this.radioButtonSha1.Size = new System.Drawing.Size(53, 17);
+            this.radioButtonSha1.TabIndex = 16;
+            this.radioButtonSha1.TabStop = true;
+            this.radioButtonSha1.Text = "Sha-1";
+            this.radioButtonSha1.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.radioButtonSha1);
+            this.groupBox1.Controls.Add(this.radioButtonSha512);
+            this.groupBox1.Controls.Add(this.radioButtonSha256);
+            this.groupBox1.Location = new System.Drawing.Point(215, 125);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(133, 102);
+            this.groupBox1.TabIndex = 17;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Hash Algorithm";
+            // 
             // OtpInformation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(383, 276);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.checkBoxCustomSettings);
             this.Controls.Add(this.pictureBoxBanner);
             this.Controls.Add(this.radioButtonHex);
@@ -209,6 +260,8 @@
             this.Text = "Configuration";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OtpInformation_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBanner)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -230,5 +283,9 @@
         private System.Windows.Forms.RadioButton radioButtonHex;
         private System.Windows.Forms.PictureBox pictureBoxBanner;
         private System.Windows.Forms.CheckBox checkBoxCustomSettings;
+        private System.Windows.Forms.RadioButton radioButtonSha256;
+        private System.Windows.Forms.RadioButton radioButtonSha512;
+        private System.Windows.Forms.RadioButton radioButtonSha1;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }

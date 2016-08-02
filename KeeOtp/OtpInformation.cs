@@ -48,9 +48,33 @@ namespace KeeOtp
                 {
                     this.checkBoxCustomSettings.Checked = true;
                 }
+
+                if (this.Data.OtpHashMode == OtpHashMode.Sha256)
+                {
+                    this.radioButtonSha1.Checked = false;
+                    this.radioButtonSha256.Checked = true;
+                    this.radioButtonSha512.Checked = false;
+                }
+                else if (this.Data.OtpHashMode == OtpHashMode.Sha512)
+                {
+                    this.radioButtonSha1.Checked = false;
+                    this.radioButtonSha256.Checked = false;
+                    this.radioButtonSha512.Checked = true;
+                }
+                else
+                {
+                    this.radioButtonSha1.Checked = true;
+                    this.radioButtonSha256.Checked = false;
+                    this.radioButtonSha512.Checked = false;
+                }
             }
             else
+            {
                 this.textBoxStep.Text = "30";
+                this.radioButtonSha1.Checked = true;
+                this.radioButtonSha256.Checked = false;
+                this.radioButtonSha512.Checked = false;
+            }
 
             SetCustomSettingsState(false);
             this.fullyLoaded = true;
