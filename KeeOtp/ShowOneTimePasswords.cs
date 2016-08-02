@@ -95,7 +95,7 @@ namespace KeeOtp
             this.lastCode = 0;
             this.lastRemainingTime = 0;
 
-            this.totp = new Totp(this.data.Key, step: this.data.Step, totpSize: this.data.Size);
+            this.totp = new Totp(data.Key, step: data.Step, mode: data.OtpHashMode, totpSize: data.Size);
             this.timerUpdateTotp.Enabled = true;
         }
 
