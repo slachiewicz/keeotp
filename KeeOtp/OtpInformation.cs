@@ -103,6 +103,7 @@ namespace KeeOtp
                 // set the default settings
                 int size = 6;
                 int step = 30;
+                OtpHashMode hashMode = OtpHashMode.Sha1;
                 Key key = null;
 
                 if (this.checkBoxCustomSettings.Checked)
@@ -139,11 +140,20 @@ namespace KeeOtp
                 else
                     key = ProtectedKey.CreateProtectedKeyAndDestroyPlaintextKey(Base32.Decode(this.textBoxKey.Text.Replace(" ", string.Empty).Replace("-", string.Empty)));
 
+                // hashmode
+                if (this.radioButtonSha1.Checked)
+                    hashMode = OtpHashMode.Sha1;
+                else if (this.radioButtonSha256.Checked)
+                    hashMode = OtpHashMode.Sha256;
+                else if (this.radioButtonSha512.Checked)
+                    hashMode = OtpHashMode.Sha512;
+
                 this.Data = new OtpAuthData()
                 {
                     Key = key,
                     Size = size,
-                    Step = step
+                    Step = step,
+                    OtpHashMode = hashMode
                 };
             }
             catch
