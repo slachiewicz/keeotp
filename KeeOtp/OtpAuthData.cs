@@ -19,15 +19,22 @@ namespace KeeOtp
         const string stepParameter = "step";
         const string sizeParameter = "size";
         const string counterParameter = "counter";
+        const string otpHashModeParameter = "otpHashMode";
 
         public Key Key { get; set; }
         public OtpType Type { get; set; }
+
+        public OtpHashMode OtpHashMode { get; set; }
 
         public int Step { get; set; }
         public int Size { get; set; }
 
         public int Counter { get; set; }
 
+        public OtpAuthData()
+        {
+            this.OtpHashMode = OtpHashMode.Sha1;
+        }
 
         public static OtpAuthData FromString(string data)
         {
@@ -43,6 +50,9 @@ namespace KeeOtp
             if (parameters[typeParameter] != null)
                 otpData.Type = (OtpType)Enum.Parse(typeof(OtpType), parameters[typeParameter]);
 
+            if (parameters[otpHashModeParameter] != null)
+                otpData.OtpHashMode = (OtpHashMode)Enum.Parse(typeof(OtpHashMode), parameters[otpHashModeParameter]);
+
             if (otpData.Type == OtpType.Totp)
                 otpData.Step = GetIntOrDefault(parameters, stepParameter, 30);
             else if (otpData.Type == OtpType.Hotp)
@@ -57,7 +67,7 @@ namespace KeeOtp
         /// Hacky query string parsing.  This was done due to reports
         /// of people with just a 3.5 or 4.0 client profile getting errors
         /// as the System.Web assembly where .net's implementation of
-        /// Url encoding and query string parsing is locate.
+        /// Url encoding and query string parsing is located.
         /// 
         /// This should be fine since the only thing stored in the string
         /// that needs to be encoded or decoded is the '=' sign.
@@ -132,7 +142,10 @@ namespace KeeOtp
                 if (this.Size != 6)
                     collection.Add(sizeParameter, this.Size.ToString());
 
-                string data = string.Empty;
+                if (this.OtpHashMode != OtpHashMode.Sha1)
+                    collection.Add(otpHashModeParameter, this.OtpHashMode.ToString());
+
+                    string data = string.Empty;
                 foreach (var key in collection.AllKeys)
                 {
                     data += string.Format("{0}={1}&", key, collection[key]);
